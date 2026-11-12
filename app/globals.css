@@ -34,6 +34,55 @@
   --animate-fill: fill 5s ease-in-out infinite;
   --animate-spin3d: spin3d 16s linear infinite;
   --animate-spin-reverse: spin 24s linear infinite reverse;
+  --animate-hero-zoom: hero-zoom 1.8s var(--ease-out-expo) both;
+
+  /* production-line robot */
+  --animate-robot-wave: robot-wave 0.5s ease-in-out infinite alternate;
+  --animate-robot-work-l: robot-work-l 0.32s ease-in-out infinite alternate;
+  --animate-robot-work-r: robot-work-r 0.32s ease-in-out infinite alternate-reverse;
+  --animate-robot-leg: robot-leg 0.5s ease-in-out infinite alternate;
+  --animate-robot-bob: robot-bob 0.25s ease-in-out infinite alternate;
+  --animate-blink: blink 4s ease-in-out infinite;
+  --animate-spark: spark 0.8s ease-out forwards;
+  --animate-belt: belt 0.9s linear infinite;
+
+  @keyframes robot-wave {
+    from { transform: rotate(-155deg); }
+    to { transform: rotate(-115deg); }
+  }
+  @keyframes robot-work-l {
+    from { transform: rotate(35deg); }
+    to { transform: rotate(75deg); }
+  }
+  @keyframes robot-work-r {
+    from { transform: rotate(20deg); }
+    to { transform: rotate(50deg); }
+  }
+  @keyframes robot-leg {
+    from { transform: rotate(9deg); }
+    to { transform: rotate(-9deg); }
+  }
+  @keyframes robot-bob {
+    from { transform: translateY(0); }
+    to { transform: translateY(-4px); }
+  }
+  @keyframes blink {
+    0%, 92%, 100% { transform: scaleY(1); }
+    95% { transform: scaleY(0.1); }
+  }
+  @keyframes spark {
+    from { opacity: 1; transform: translate(0, 0) scale(1); }
+    to { opacity: 0; transform: translate(var(--sx), var(--sy)) scale(0.3); }
+  }
+  @keyframes belt {
+    from { background-position: 0 0; }
+    to { background-position: 36px 0; }
+  }
+
+  @keyframes hero-zoom {
+    from { opacity: 0; transform: scale(1.08); }
+    to { opacity: 1; transform: none; }
+  }
 
   @keyframes fade-up {
     from { opacity: 0; transform: translateY(14px); }

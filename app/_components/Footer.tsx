@@ -1,21 +1,30 @@
 import Image from "next/image";
 import Link from "next/link";
 import { footerLinks, legal, site } from "@/app/_data/home";
+import { ProductionLine } from "./ProductionLine";
 import { Icon, type IconName } from "./ui/Icons";
 import { Reveal } from "./ui/Reveal";
 
 export function Footer() {
   return (
     <footer className="relative overflow-hidden bg-ink text-paper">
-      {/* CTA strip */}
+      {/* Production line: from order to doorstep */}
       <div className="mx-auto max-w-7xl px-4 pt-20 sm:px-6">
-        <Reveal className="flex flex-col items-start justify-between gap-8 rounded-[2rem] bg-paper/5 p-8 ring-1 ring-paper/10 md:flex-row md:items-center md:p-12">
-          <h2 className="max-w-xl font-display text-3xl leading-tight font-medium sm:text-4xl">
-            Ready to build boxes your customers <span className="text-coral italic">remember?</span>
-          </h2>
+        <Reveal className="mb-8 flex flex-col items-start justify-between gap-6 md:flex-row md:items-end">
+          <div>
+            <p className="mb-3 inline-flex items-center gap-2 text-xs font-bold tracking-[0.2em] text-coral uppercase">
+              <span className="h-px w-8 bg-current" /> From order to doorstep
+            </p>
+            <h2 className="max-w-xl font-display text-3xl leading-tight font-medium sm:text-4xl">
+              Ready to build boxes your customers <span className="text-coral italic">remember?</span>
+            </h2>
+          </div>
           <a href="#quotation" className="group inline-flex shrink-0 items-center gap-2 rounded-full bg-coral px-7 py-4 font-bold text-white transition hover:bg-white hover:text-ink">
             Get a Free Quote <Icon name="arrow" className="size-4 transition-transform group-hover:translate-x-1" />
           </a>
+        </Reveal>
+        <Reveal variant="scale" delay={120}>
+          <ProductionLine />
         </Reveal>
       </div>
 
