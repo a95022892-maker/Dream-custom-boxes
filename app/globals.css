@@ -1,0 +1,161 @@
+@import "tailwindcss";
+
+/* ------------------------------------------------------------------ tokens */
+
+@theme {
+  --color-paper: #f7f3ec;
+  --color-paper-deep: #efe7da;
+  --color-ink: #17161b;
+  --color-ink-soft: #4a4752;
+  --color-coral: #ef5f55;
+  --color-coral-deep: #d94a40;
+  --color-kraft: #c9a374;
+  --color-lilac: #e7e2f6;
+  --color-sage: #dfe8d6;
+  --color-line: #e2d9cb;
+
+  --font-display: var(--font-fraunces), Georgia, serif;
+  --font-sans: var(--font-manrope), ui-sans-serif, system-ui, sans-serif;
+
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+
+  --animate-float: float 6s ease-in-out infinite;
+  --animate-float-slow: float 8s ease-in-out infinite;
+  --animate-spin-slow: spin 18s linear infinite;
+  --animate-marquee: marquee var(--marquee-duration, 30s) linear infinite;
+  --animate-rise: rise 0.9s var(--ease-out-expo) both;
+  --animate-pop: pop 1.2s var(--ease-out-expo) both;
+  --animate-fade-up: fade-up 0.6s var(--ease-out-expo) both;
+  --animate-progress: progress 5s linear forwards;
+  --animate-draw: draw 3.2s ease-in-out infinite alternate;
+  --animate-cursor: cursor 6s ease-in-out infinite;
+  --animate-pop-loop: pop-loop 3.6s ease-out infinite;
+  --animate-drive: drive 5s ease-in-out infinite;
+  --animate-fill: fill 5s ease-in-out infinite;
+  --animate-spin3d: spin3d 16s linear infinite;
+  --animate-spin-reverse: spin 24s linear infinite reverse;
+
+  @keyframes fade-up {
+    from { opacity: 0; transform: translateY(14px); }
+    to { opacity: 1; transform: none; }
+  }
+  @keyframes progress {
+    from { transform: scaleX(0); }
+    to { transform: scaleX(1); }
+  }
+  @keyframes draw {
+    from { stroke-dashoffset: 1; }
+    to { stroke-dashoffset: 0; }
+  }
+  @keyframes cursor {
+    0%, 100% { transform: translate(0, 0); }
+    25% { transform: translate(-70px, -30px); }
+    50% { transform: translate(-30px, 20px); }
+    75% { transform: translate(-90px, 10px); }
+  }
+  @keyframes pop-loop {
+    0% { opacity: 0; transform: translateY(10px) scale(0.6); }
+    12%, 78% { opacity: 1; transform: none; }
+    100% { opacity: 0; transform: translateY(-6px); }
+  }
+  @keyframes drive {
+    0% { left: 0%; }
+    85%, 100% { left: 100%; }
+  }
+  @keyframes fill {
+    0% { transform: scaleX(0); }
+    85%, 100% { transform: scaleX(1); }
+  }
+  @keyframes spin3d {
+    from { transform: rotateX(-24deg) rotateY(0deg); }
+    to { transform: rotateX(-24deg) rotateY(360deg); }
+  }
+
+  @keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-12px); }
+  }
+  @keyframes marquee {
+    to { transform: translateX(-50%); }
+  }
+  @keyframes pop {
+    from { opacity: 0; transform: scale(0.92) translateY(24px); }
+    to { opacity: 1; transform: none; }
+  }
+  @keyframes rise {
+    from { opacity: 0; transform: translateY(110%); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+}
+
+/* -------------------------------------------------------------------- base */
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 6rem;
+}
+
+body {
+  background: var(--color-paper);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+}
+
+::selection {
+  background: var(--color-coral);
+  color: white;
+}
+
+/* Subtle paper grain, purely decorative */
+.grain::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.35;
+  background-image: radial-gradient(rgb(23 22 27 / 0.06) 1px, transparent 1px);
+  background-size: 18px 18px;
+}
+
+/* ------------------------------------------------------- scroll reveal */
+/* Paired with <Reveal>: elements start hidden and animate in once visible. */
+
+[data-reveal] {
+  opacity: 0;
+  transition:
+    opacity 0.9s var(--ease-out-expo),
+    transform 0.9s var(--ease-out-expo);
+  transition-delay: var(--reveal-delay, 0ms);
+}
+[data-reveal="up"] { transform: translateY(32px); }
+[data-reveal="left"] { transform: translateX(-40px); }
+[data-reveal="right"] { transform: translateX(40px); }
+[data-reveal="scale"] { transform: scale(0.94); }
+[data-reveal][data-revealed] {
+  opacity: 1;
+  transform: none;
+}
+
+/* Process timeline line draws itself when its parent reveals */
+.process-line {
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 1.6s var(--ease-out-expo) 0.2s;
+}
+[data-revealed] .process-line { transform: scaleX(1); }
+
+/* Marquee pauses on hover for readability */
+.marquee:hover .marquee-track { animation-play-state: paused; }
+
+/* ------------------------------------------------------- reduced motion */
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  [data-reveal] { opacity: 1; transform: none; }
+  .process-line { transform: none; }
+}
